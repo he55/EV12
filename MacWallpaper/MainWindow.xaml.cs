@@ -48,7 +48,7 @@ namespace MacWallpaper
 
                 Ass ass = new Ass();
                 ass.emoji = emoji;
-                ass.id = v1;
+                ass.id = item;
                 ass.previewImage = v1;
                 ass.str1=System.IO.Path.GetFileName(item);
                 asses.Add(ass);
@@ -80,11 +80,67 @@ namespace MacWallpaper
         public string des { get; set; }
         public List<Ass> assets { get; set; }
     }
+    public class AssetItem
+    {
+        public string name { get; set; }
+        public string source { get; set; }
+    }
+    public class EmojiAsset
+    {
+        public string name { get; set; }
+        public List<AssetItem> items { get; set; }
+    }
+    public class AssetHelper
+    {
+       public static List<EmojiAsset> MakeAssets(string path)
+        {
+            List<EmojiAsset> assets = new List<EmojiAsset>();
+            string v1 = System.IO.Path.Combine(path, "3D");
+            if (Directory.Exists(v1))
+            {
+                assets.Add(new EmojiAsset
+                {
+                    name = "Default",
+                    items = MakeItems(path)
+                });
+                return assets;
+            }
+
+            string[] dirs = Directory.GetDirectories(path);
+            foreach (var item in dirs)
+            {
+                string v = System.IO.Path.GetFileName(item);
+                assets.Add(new EmojiAsset
+                {
+                    name = v,
+                    items = MakeItems(item)
+                });
+            }
+            return assets;
+        }
+       static List<AssetItem> MakeItems(string path)
+        {
+            List<AssetItem> items = new List<AssetItem>();
+            string[] dirs = Directory.GetDirectories(path);
+            foreach (var item in dirs)
+            {
+                string v = System.IO.Path.GetFileName(item);
+                string v1 = Directory.GetFiles(item)[0];
+                items.Add(new AssetItem
+                {
+                    name = v,
+                    source = v1,
+                });
+            }
+            return items;
+        }
+    }
     public class Ass:INotifyPropertyChanged
     {
         private bool isSelected1;
 
         public Emoji emoji { get; set; }
+        public List<EmojiAsset> assets => AssetHelper.MakeAssets(id);
         public string id { get; set; }
         public string str1 { get; set; }
         public string previewImage { get; set; }
