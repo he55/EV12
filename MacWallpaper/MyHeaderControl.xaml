@@ -15,16 +15,17 @@
             <Setter Property="Margin" Value="0,5"/>
         </Style>
     </UserControl.Resources>
-    <Grid>
-        <Border CornerRadius="6" Width="128" Height="128" VerticalAlignment="Top" Margin="0,5,0,0">
-            <Border.Background>
-                <ImageBrush ImageSource="{Binding previewImage}"/>
-            </Border.Background>
+    <StackPanel>
+        <Image Width="128" Height="128" Source="{Binding SelectedItem.items[0].source, ElementName=listBox}"/>
+        <Border Style="{StaticResource BorderStyle}">
+            <TextBlock Text="{Binding str1}"  />
         </Border>
-        <StackPanel VerticalAlignment="Top" Margin="0,140,0,0">
-            <Border Style="{StaticResource BorderStyle}">
-                <TextBlock Text="{Binding str1}"  />
-            </Border>
-        </StackPanel>
-    </Grid>
+        <ListBox x:Name="listBox" ItemsSource="{Binding assets}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
 </UserControl>

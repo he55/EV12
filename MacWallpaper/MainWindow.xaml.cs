@@ -74,6 +74,7 @@ namespace MacWallpaper
                 _lastSelectedItem = selectedItem;
                 selectedItem.isSelected = true;
                 myHeaderControl.DataContext = selectedItem;
+                myHeaderControl.listBox.SelectedIndex = 0;
             }
         }
     }
