@@ -4,18 +4,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TinyJson;
 
 namespace MacWallpaper
@@ -39,11 +30,11 @@ namespace MacWallpaper
             foreach (var item in dirs)
             {
                 string v = System.IO.Path.Combine(item, "3D");
-                if(!Directory.Exists(v))
-                 v = System.IO.Path.Combine(item,"Default","3D");
+                if (!Directory.Exists(v))
+                    v = System.IO.Path.Combine(item, "Default", "3D");
 
-                var files=Directory.GetFiles(v,"*.png");
-                if(files.Length==0)
+                var files = Directory.GetFiles(v, "*.png");
+                if (files.Length == 0)
                     continue;
 
                 string v2 = System.IO.Path.Combine(item, "metadata.json");
@@ -54,11 +45,11 @@ namespace MacWallpaper
                 ass.emoji = emoji;
                 ass.id = item;
                 ass.previewImage = files[0];
-                ass.name=System.IO.Path.GetFileName(item);
+                ass.name = System.IO.Path.GetFileName(item);
                 asses.Add(ass);
             }
 
-            List<Cate> cates = asses.GroupBy(x=>x.emoji.group).Select(x=>new Cate { title=x.Key, assets=x.ToList() }).ToList();
+            List<Cate> cates = asses.GroupBy(x => x.emoji.group).Select(x => new Cate { title = x.Key, assets = x.ToList() }).ToList();
             listBox.ItemsSource = cates;
         }
 
@@ -74,7 +65,7 @@ namespace MacWallpaper
             Ass selectedItem = (Ass)gridView.SelectedItem;
             if (selectedItem != null)
             {
-                if(_lastSelectedItem != null)
+                if (_lastSelectedItem != null)
                     _lastSelectedItem.isSelected = false;
 
                 _lastSelectedItem = selectedItem;
@@ -87,7 +78,7 @@ namespace MacWallpaper
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             EmojiAsset selectedItem = (EmojiAsset)listBox2.SelectedItem;
-            if(selectedItem != null)
+            if (selectedItem != null)
             {
                 Process.Start("explorer.exe", $"/select, \"{selectedItem.items[0].source}\"");
             }
@@ -114,7 +105,7 @@ namespace MacWallpaper
 
     public class AssetHelper
     {
-       public static List<EmojiAsset> MakeAssets(string path)
+        public static List<EmojiAsset> MakeAssets(string path)
         {
             List<EmojiAsset> assets = new List<EmojiAsset>();
             string v1 = System.IO.Path.Combine(path, "3D");
@@ -141,13 +132,13 @@ namespace MacWallpaper
             return assets;
         }
 
-       static List<AssetItem> MakeItems(string path)
+        static List<AssetItem> MakeItems(string path)
         {
             List<AssetItem> items = new List<AssetItem>();
             string[] dirs = Directory.GetDirectories(path);
             foreach (var item in dirs)
             {
-                var files=Directory.GetFiles(item);
+                var files = Directory.GetFiles(item);
                 string v1 = files.FirstOrDefault(x => x.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || x.EndsWith(".svg", StringComparison.OrdinalIgnoreCase));
                 if (v1 == null)
                     continue;
@@ -163,7 +154,7 @@ namespace MacWallpaper
         }
     }
 
-    public class Ass:INotifyPropertyChanged
+    public class Ass : INotifyPropertyChanged
     {
         private bool isSelected1;
 
@@ -176,7 +167,7 @@ namespace MacWallpaper
         public string filepath { get; set; }
         public bool isSelected
         {
-            get => isSelected1; 
+            get => isSelected1;
             set
             {
                 isSelected1 = value;
