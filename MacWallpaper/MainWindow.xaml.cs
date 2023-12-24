@@ -59,8 +59,6 @@ namespace MacWallpaper
 
             List<Cate> cates = asses.GroupBy(x=>x.emoji.group).Select(x=>new Cate { title=x.Key, assets=x.ToList() }).ToList();
             listBox.ItemsSource = cates;
-            listBox.SelectedIndex = 0;
-            gridView.SelectedIndex = 0;
         }
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,8 +77,8 @@ namespace MacWallpaper
                     _lastSelectedItem.isSelected = false;
 
                 _lastSelectedItem = selectedItem;
-                selectedItem.isSelected = true;
-                myHeaderControl.DataContext = selectedItem;
+                _lastSelectedItem.isSelected = true;
+                myHeaderControl.DataContext = _lastSelectedItem;
                 listBox2.SelectedIndex = 0;
             }
         }
