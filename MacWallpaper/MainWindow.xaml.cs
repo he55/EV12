@@ -72,6 +72,7 @@ namespace MacWallpaper
                 _lastSelectedItem.isSelected = true;
                 myHeaderControl.DataContext = _lastSelectedItem;
                 listBox2.SelectedIndex = 0;
+                listBox2.Visibility=_lastSelectedItem.assets.Count>1 ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
