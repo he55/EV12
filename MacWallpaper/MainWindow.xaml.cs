@@ -53,14 +53,21 @@ namespace MacWallpaper
                 ass.emoji = emoji;
                 ass.id = item;
                 ass.previewImage = files[0];
-                ass.str1=System.IO.Path.GetFileName(item);
+                ass.name=System.IO.Path.GetFileName(item);
                 asses.Add(ass);
             }
 
-            List<Cate> cates = asses.GroupBy(x=>x.emoji.group).Select(x=>new Cate { str1=x.Key, assets=x.ToList() }).ToList();
+            List<Cate> cates = asses.GroupBy(x=>x.emoji.group).Select(x=>new Cate { title=x.Key, assets=x.ToList() }).ToList();
             listBox.ItemsSource = cates;
             listBox.SelectedIndex = 0;
             gridView.SelectedIndex = 0;
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            gridView.ItemsSource = ((Cate)listBox.SelectedItem).assets;
+            if (gridView.Items.Count > 0)
+                gridView.ScrollIntoView(gridView.Items[0]);
         }
 
         private void gridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -74,14 +81,13 @@ namespace MacWallpaper
                 _lastSelectedItem = selectedItem;
                 selectedItem.isSelected = true;
                 myHeaderControl.DataContext = selectedItem;
-                myHeaderControl.listBox.SelectedIndex = 0;
+                listBox2.SelectedIndex = 0;
             }
         }
     }
     public class Cate
     {
-        public string str1 { get; set; }
-        public string des { get; set; }
+        public string title { get; set; }
         public List<Ass> assets { get; set; }
     }
     public class AssetItem
@@ -150,7 +156,7 @@ namespace MacWallpaper
         public Emoji emoji { get; set; }
         public List<EmojiAsset> assets => AssetHelper.MakeAssets(id);
         public string id { get; set; }
-        public string str1 { get; set; }
+        public string name { get; set; }
         public string previewImage { get; set; }
 
         public string filepath { get; set; }
