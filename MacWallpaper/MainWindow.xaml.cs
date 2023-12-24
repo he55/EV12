@@ -83,21 +83,25 @@ namespace MacWallpaper
             }
         }
     }
+
     public class Cate
     {
         public string title { get; set; }
         public List<Ass> assets { get; set; }
     }
+
     public class AssetItem
     {
         public string name { get; set; }
         public string source { get; set; }
     }
+
     public class EmojiAsset
     {
         public string name { get; set; }
         public List<AssetItem> items { get; set; }
     }
+
     public class AssetHelper
     {
        public static List<EmojiAsset> MakeAssets(string path)
@@ -126,6 +130,7 @@ namespace MacWallpaper
             }
             return assets;
         }
+
        static List<AssetItem> MakeItems(string path)
         {
             List<AssetItem> items = new List<AssetItem>();
@@ -147,6 +152,7 @@ namespace MacWallpaper
             return items;
         }
     }
+
     public class Ass:INotifyPropertyChanged
     {
         private bool isSelected1;
