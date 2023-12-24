@@ -25,8 +25,16 @@ namespace MacWallpaper
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            List<Ass> asses = LoadData(@"C:\Users\admin\Documents\GitHub\fluentui-emoji\assets");
+
+            List<Cate> cates = asses.GroupBy(x => x.emoji.group).Select(x => new Cate { title = x.Key, assets = x.ToList() }).ToList();
+            listBox.ItemsSource = cates;
+        }
+
+        private static List<Ass> LoadData(string dir)
+        {
             List<Ass> asses = new List<Ass>();
-            string[] dirs = Directory.GetDirectories(@"C:\Users\admin\Documents\GitHub\fluentui-emoji\assets");
+            string[] dirs = Directory.GetDirectories(dir);
             foreach (var item in dirs)
             {
                 string v = System.IO.Path.Combine(item, "3D");
@@ -49,8 +57,7 @@ namespace MacWallpaper
                 asses.Add(ass);
             }
 
-            List<Cate> cates = asses.GroupBy(x => x.emoji.group).Select(x => new Cate { title = x.Key, assets = x.ToList() }).ToList();
-            listBox.ItemsSource = cates;
+            return asses;
         }
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
