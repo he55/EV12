@@ -20,24 +20,14 @@
         </Style>
     </Window.Resources>
     <DockPanel>
-        <Grid Width="150">
-            <ListBox x:Name="listBox" DisplayMemberPath="title" SelectionChanged="listBox_SelectionChanged"/>
-        </Grid>
-        <Grid x:Name="myHeaderControl" DockPanel.Dock="Right" Width="150" Margin="10,0,10,0">
-            <StackPanel>
+            <ListBox x:Name="listBox" Width="150" DisplayMemberPath="title" SelectionChanged="listBox_SelectionChanged"/>
+            <StackPanel x:Name="myHeaderControl" DockPanel.Dock="Right" Width="150" Margin="10,0,10,0">
                 <Image Width="128" Height="128" Source="{Binding SelectedItem.items[0].source, ElementName=listBox2}"/>
                 <Border Style="{StaticResource BorderStyle}">
-                    <TextBlock Text="{Binding name}"  />
+                <TextBlock Text="{Binding name}" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Border>
-                <ListBox x:Name="listBox2" ItemsSource="{Binding assets}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding name}"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
-        </Grid>
+            <ListBox x:Name="listBox2" ItemsSource="{Binding assets}" DisplayMemberPath="name"/>
+        </StackPanel>
         <Border Background="{DynamicResource SystemControlBackgroundBaseLowBrush}" DockPanel.Dock="Right" Width="1"/>
         <ui:GridView x:Name="gridView"  SelectionChanged="gridView_SelectionChanged">
             <ui:GridView.ItemTemplate>
