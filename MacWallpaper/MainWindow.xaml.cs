@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -80,6 +81,15 @@ namespace MacWallpaper
                 _lastSelectedItem.isSelected = true;
                 myHeaderControl.DataContext = _lastSelectedItem;
                 listBox2.SelectedIndex = 0;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            EmojiAsset selectedItem = (EmojiAsset)listBox2.SelectedItem;
+            if(selectedItem != null)
+            {
+                Process.Start("explorer.exe", $"/select, \"{selectedItem.items[0].source}\"");
             }
         }
     }

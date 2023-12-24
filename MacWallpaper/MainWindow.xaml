@@ -27,6 +27,7 @@
                 <TextBlock Text="{Binding name}" TextWrapping="Wrap" TextAlignment="Center"/>
             </Border>
             <ListBox x:Name="listBox2" ItemsSource="{Binding assets}" DisplayMemberPath="name"/>
+            <Button Content="打开文件夹" Click="Button_Click"/>
         </StackPanel>
         <Border Background="{DynamicResource SystemControlBackgroundBaseLowBrush}" DockPanel.Dock="Right" Width="1"/>
         <ui:GridView x:Name="gridView" SelectedIndex="0"  SelectionChanged="gridView_SelectionChanged">
