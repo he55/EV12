@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TinyJson;
 
 namespace MacWallpaper
@@ -33,16 +25,24 @@ namespace MacWallpaper
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            List<Ass> asses = LoadData(@"C:\Users\admin\Documents\GitHub\fluentui-emoji\assets");
+
+            List<Cate> cates = asses.GroupBy(x => x.emoji.group).Select(x => new Cate { title = x.Key, assets = x.ToList() }).ToList();
+            listBox.ItemsSource = cates;
+        }
+
+        private static List<Ass> LoadData(string dir)
+        {
             List<Ass> asses = new List<Ass>();
-            string[] dirs = Directory.GetDirectories(@"C:\Users\admin\Documents\GitHub\fluentui-emoji\assets");
+            string[] dirs = Directory.GetDirectories(dir);
             foreach (var item in dirs)
             {
                 string v = System.IO.Path.Combine(item, "3D");
-                if(!Directory.Exists(v))
-                 v = System.IO.Path.Combine(item,"Default","3D");
+                if (!Directory.Exists(v))
+                    v = System.IO.Path.Combine(item, "Default", "3D");
 
-                var files=Directory.GetFiles(v,"*.png");
-                if(files.Length==0)
+                var files = Directory.GetFiles(v, "*.png");
+                if (files.Length == 0)
                     continue;
 
                 string v2 = System.IO.Path.Combine(item, "metadata.json");
@@ -53,14 +53,18 @@ namespace MacWallpaper
                 ass.emoji = emoji;
                 ass.id = item;
                 ass.previewImage = files[0];
-                ass.str1=System.IO.Path.GetFileName(item);
+                ass.name = System.IO.Path.GetFileName(item);
                 asses.Add(ass);
             }
 
-            List<Cate> cates = asses.GroupBy(x=>x.emoji.group).Select(x=>new Cate { str1=x.Key, assets=x.ToList() }).ToList();
-            listBox.ItemsSource = cates;
-            listBox.SelectedIndex = 0;
-            gridView.SelectedIndex = 0;
+            return asses;
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            gridView.ItemsSource = ((Cate)listBox.SelectedItem).assets;
+            if (gridView.Items.Count > 0)
+                gridView.ScrollIntoView(gridView.Items[0]);
         }
 
         private void gridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -68,35 +72,48 @@ namespace MacWallpaper
             Ass selectedItem = (Ass)gridView.SelectedItem;
             if (selectedItem != null)
             {
-                if(_lastSelectedItem != null)
+                if (_lastSelectedItem != null)
                     _lastSelectedItem.isSelected = false;
 
                 _lastSelectedItem = selectedItem;
-                selectedItem.isSelected = true;
-                myHeaderControl.DataContext = selectedItem;
-                myHeaderControl.listBox.SelectedIndex = 0;
+                _lastSelectedItem.isSelected = true;
+                myHeaderControl.DataContext = _lastSelectedItem;
+                listBox2.SelectedIndex = 0;
+                listBox2.Visibility=_lastSelectedItem.assets.Count>1 ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            EmojiAsset selectedItem = (EmojiAsset)listBox2.SelectedItem;
+            if (selectedItem != null)
+            {
+                Process.Start("explorer.exe", $"/select, \"{selectedItem.items[0].source}\"");
             }
         }
     }
+
     public class Cate
     {
-        public string str1 { get; set; }
-        public string des { get; set; }
+        public string title { get; set; }
         public List<Ass> assets { get; set; }
     }
+
     public class AssetItem
     {
         public string name { get; set; }
         public string source { get; set; }
     }
+
     public class EmojiAsset
     {
         public string name { get; set; }
         public List<AssetItem> items { get; set; }
     }
+
     public class AssetHelper
     {
-       public static List<EmojiAsset> MakeAssets(string path)
+        public static List<EmojiAsset> MakeAssets(string path)
         {
             List<EmojiAsset> assets = new List<EmojiAsset>();
             string v1 = System.IO.Path.Combine(path, "3D");
@@ -122,13 +139,14 @@ namespace MacWallpaper
             }
             return assets;
         }
-       static List<AssetItem> MakeItems(string path)
+
+        static List<AssetItem> MakeItems(string path)
         {
             List<AssetItem> items = new List<AssetItem>();
             string[] dirs = Directory.GetDirectories(path);
             foreach (var item in dirs)
             {
-                var files=Directory.GetFiles(item);
+                var files = Directory.GetFiles(item);
                 string v1 = files.FirstOrDefault(x => x.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || x.EndsWith(".svg", StringComparison.OrdinalIgnoreCase));
                 if (v1 == null)
                     continue;
@@ -143,20 +161,21 @@ namespace MacWallpaper
             return items;
         }
     }
-    public class Ass:INotifyPropertyChanged
+
+    public class Ass : INotifyPropertyChanged
     {
         private bool isSelected1;
 
         public Emoji emoji { get; set; }
         public List<EmojiAsset> assets => AssetHelper.MakeAssets(id);
         public string id { get; set; }
-        public string str1 { get; set; }
+        public string name { get; set; }
         public string previewImage { get; set; }
 
         public string filepath { get; set; }
         public bool isSelected
         {
-            get => isSelected1; 
+            get => isSelected1;
             set
             {
                 isSelected1 = value;
