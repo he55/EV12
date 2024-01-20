@@ -12,7 +12,7 @@ namespace MacWallpaper
     /// </summary>
     public partial class MainWindow : Window
     {
-        EmojiAsset _lastSelectedItem;
+        EmojiAsset _lastSelectedAsset;
 
         public MainWindow()
         {
@@ -69,12 +69,12 @@ namespace MacWallpaper
             EmojiAsset selectedItem = (EmojiAsset)gridView.SelectedItem;
             if (selectedItem != null)
             {
-                if (_lastSelectedItem != null)
-                    _lastSelectedItem.isSelected = false;
+                if (_lastSelectedAsset != null)
+                    _lastSelectedAsset.isSelected = false;
 
                 selectedItem.isSelected = true;
                 header.DataContext = selectedItem;
-                _lastSelectedItem = selectedItem;
+                _lastSelectedAsset = selectedItem;
 
                 listBox2.SelectedIndex = 0;
                 listBox2.Visibility = selectedItem.items.Count > 1 ? Visibility.Visible : Visibility.Collapsed;
