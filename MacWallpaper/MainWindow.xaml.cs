@@ -76,16 +76,16 @@ namespace MacWallpaper
                 _lastSelectedItem.isSelected = true;
                 myHeaderControl.DataContext = _lastSelectedItem;
                 listBox2.SelectedIndex = 0;
-                listBox2.Visibility = _lastSelectedItem.assets.Count > 1 ? Visibility.Visible : Visibility.Collapsed;
+                listBox2.Visibility = _lastSelectedItem.items.Count > 1 ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            EmojiAsset2 selectedItem = (EmojiAsset2)listBox2.SelectedItem;
+            AssetItem selectedItem = (AssetItem)listBox2.SelectedItem;
             if (selectedItem != null)
             {
-                Process.Start("explorer.exe", $"/select, \"{selectedItem.items[0].source}\"");
+                Process.Start("explorer.exe", $"/select, \"{selectedItem.subitems[0].source}\"");
             }
         }
     }

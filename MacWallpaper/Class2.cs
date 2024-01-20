@@ -16,16 +16,16 @@ namespace MacWallpaper
     public class EmojiAsset : INotifyPropertyChanged
     {
         private bool _isSelected;
-        private List<EmojiAsset2> _assets;
+        private List<AssetItem> _items;
 
         public Emoji2 emoji { get; set; }
-        public List<EmojiAsset2> assets
+        public List<AssetItem> items
         {
             get
             {
-                if (_assets == null)
-                    _assets = EmojiAssetHelper.MakeAssets(id);
-                return _assets;
+                if (_items == null)
+                    _items = AssetItemHelper.MakeItems(id);
+                return _items;
             }
         }
         public string id { get; set; }
@@ -52,30 +52,30 @@ namespace MacWallpaper
         }
     }
 
-    public class AssetItem2
+    public class AssetSubitem
     {
         public string name { get; set; }
         public string source { get; set; }
     }
 
-    public class EmojiAsset2
+    public class AssetItem
     {
         public string name { get; set; }
-        public List<AssetItem2> items { get; set; }
+        public List<AssetSubitem> subitems { get; set; }
     }
 
-    public class EmojiAssetHelper
+    public class AssetItemHelper
     {
-        public static List<EmojiAsset2> MakeAssets(string path)
+        public static List<AssetItem> MakeItems(string path)
         {
-            List<EmojiAsset2> assets = new List<EmojiAsset2>();
+            List<AssetItem> assets = new List<AssetItem>();
             string v1 = Path.Combine(path, "3D");
             if (Directory.Exists(v1))
             {
-                assets.Add(new EmojiAsset2
+                assets.Add(new AssetItem
                 {
                     name = "Default",
-                    items = MakeItems(path)
+                    subitems = MakeSubitems(path)
                 });
                 return assets;
             }
@@ -84,18 +84,18 @@ namespace MacWallpaper
             foreach (var item in dirs)
             {
                 string v = Path.GetFileName(item);
-                assets.Add(new EmojiAsset2
+                assets.Add(new AssetItem
                 {
                     name = v,
-                    items = MakeItems(item)
+                    subitems = MakeSubitems(item)
                 });
             }
             return assets;
         }
 
-        static List<AssetItem2> MakeItems(string path)
+        static List<AssetSubitem> MakeSubitems(string path)
         {
-            List<AssetItem2> items = new List<AssetItem2>();
+            List<AssetSubitem> items = new List<AssetSubitem>();
             string[] dirs = Directory.GetDirectories(path);
             foreach (var item in dirs)
             {
@@ -105,7 +105,7 @@ namespace MacWallpaper
                     continue;
 
                 string v = Path.GetFileName(item);
-                items.Add(new AssetItem2
+                items.Add(new AssetSubitem
                 {
                     name = v,
                     source = v1,
