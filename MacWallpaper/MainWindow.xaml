@@ -21,7 +21,7 @@
     </Window.Resources>
     <DockPanel>
         <ListBox x:Name="listBox" SelectedIndex="0" Width="150" DisplayMemberPath="title" SelectionChanged="listBox_SelectionChanged"/>
-        <StackPanel x:Name="myHeaderControl" DockPanel.Dock="Right" Width="150" Margin="10,0,10,0">
+        <StackPanel x:Name="header" DockPanel.Dock="Right" Width="150" Margin="10,0,10,0">
             <Image Width="128" Height="128" Source="{Binding SelectedItem.subitems[0].source, ElementName=listBox2}"/>
             <Border Style="{StaticResource BorderStyle}">
                 <TextBlock Text="{Binding name}" TextWrapping="Wrap" TextAlignment="Center"/>
