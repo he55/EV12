@@ -51,7 +51,7 @@
                 x:Name="listBox2"
                 DisplayMemberPath="name"
                 ItemsSource="{Binding items}" />
-            <Button Click="Button_Click" Content="打开文件夹" />
+            <Button Click="Button_Click" Content="Open Folder" />
         </StackPanel>
         <Border
             Width="1"

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using TinyJson;
 
 namespace MacWallpaper
 {
@@ -45,7 +44,7 @@ namespace MacWallpaper
 
                 string filePath = Path.Combine(dir, "metadata.json");
                 string json = File.ReadAllText(filePath);
-                EmojiObject emoji = JSONParser.FromJson<EmojiObject>(json);
+                EmojiObject emoji = TinyJson.JSONParser.FromJson<EmojiObject>(json);
 
                 EmojiAsset asset = new EmojiAsset();
                 asset.emoji = emoji;
