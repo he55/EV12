@@ -31,7 +31,7 @@ namespace MacWallpaper
         public static List<EmojiAsset> MakeAssets(string path)
         {
             List<EmojiAsset> assets = new List<EmojiAsset>();
-            string v1 = System.IO.Path.Combine(path, "3D");
+            string v1 = Path.Combine(path, "3D");
             if (Directory.Exists(v1))
             {
                 assets.Add(new EmojiAsset
@@ -45,7 +45,7 @@ namespace MacWallpaper
             string[] dirs = Directory.GetDirectories(path);
             foreach (var item in dirs)
             {
-                string v = System.IO.Path.GetFileName(item);
+                string v = Path.GetFileName(item);
                 assets.Add(new EmojiAsset
                 {
                     name = v,
@@ -66,7 +66,7 @@ namespace MacWallpaper
                 if (v1 == null)
                     continue;
 
-                string v = System.IO.Path.GetFileName(item);
+                string v = Path.GetFileName(item);
                 items.Add(new AssetItem
                 {
                     name = v,

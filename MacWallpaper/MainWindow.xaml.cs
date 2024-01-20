@@ -34,15 +34,15 @@ namespace MacWallpaper
             string[] dirs = Directory.GetDirectories(dir);
             foreach (var item in dirs)
             {
-                string v = System.IO.Path.Combine(item, "3D");
+                string v = Path.Combine(item, "3D");
                 if (!Directory.Exists(v))
-                    v = System.IO.Path.Combine(item, "Default", "3D");
+                    v = Path.Combine(item, "Default", "3D");
 
                 var files = Directory.GetFiles(v, "*.png");
                 if (files.Length == 0)
                     continue;
 
-                string v2 = System.IO.Path.Combine(item, "metadata.json");
+                string v2 = Path.Combine(item, "metadata.json");
                 string v3 = File.ReadAllText(v2);
                 Emoji emoji = JSONParser.FromJson<Emoji>(v3);
 
@@ -50,7 +50,7 @@ namespace MacWallpaper
                 ass.emoji = emoji;
                 ass.id = item;
                 ass.previewImage = files[0];
-                ass.name = System.IO.Path.GetFileName(item);
+                ass.name = Path.GetFileName(item);
                 asses.Add(ass);
             }
 
