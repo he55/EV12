@@ -22,39 +22,40 @@ namespace MacWallpaper
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            List<EmojiAsset> asses = LoadData(@"C:\Users\admin\Documents\GitHub\fluentui-emoji\assets");
-
-            List<EmojiCategory> cates = asses.GroupBy(x => x.emoji.group).Select(x => new EmojiCategory { title = x.Key, assets = x.ToList() }).ToList();
-            listBox.ItemsSource = cates;
+            List<EmojiAsset> assets = LoadData(@"C:\Users\admin\Documents\GitHub\fluentui-emoji\assets");
+            List<EmojiCategory> categories = assets.GroupBy(x => x.emoji.group)
+                .Select(x => new EmojiCategory { title = x.Key, assets = x.ToList() })
+                .ToList();
+            listBox.ItemsSource = categories;
         }
 
-        static List<EmojiAsset> LoadData(string dir)
+        static List<EmojiAsset> LoadData(string path)
         {
-            List<EmojiAsset> asses = new List<EmojiAsset>();
-            string[] dirs = Directory.GetDirectories(dir);
-            foreach (var item in dirs)
+            List<EmojiAsset> assets = new List<EmojiAsset>();
+            string[] dirs = Directory.GetDirectories(path);
+            foreach (var dir in dirs)
             {
-                string v = Path.Combine(item, "3D");
-                if (!Directory.Exists(v))
-                    v = Path.Combine(item, "Default", "3D");
+                string imgdir = Path.Combine(dir, "3D");
+                if (!Directory.Exists(imgdir))
+                    imgdir = Path.Combine(dir, "Default", "3D");
 
-                var files = Directory.GetFiles(v, "*.png");
+                var files = Directory.GetFiles(imgdir, "*.png");
                 if (files.Length == 0)
                     continue;
 
-                string v2 = Path.Combine(item, "metadata.json");
-                string v3 = File.ReadAllText(v2);
-                Emoji2 emoji = JSONParser.FromJson<Emoji2>(v3);
+                string filePath = Path.Combine(dir, "metadata.json");
+                string json = File.ReadAllText(filePath);
+                Emoji2 emoji = JSONParser.FromJson<Emoji2>(json);
 
-                EmojiAsset ass = new EmojiAsset();
-                ass.emoji = emoji;
-                ass.id = item;
-                ass.previewImage = files[0];
-                ass.name = Path.GetFileName(item);
-                asses.Add(ass);
+                EmojiAsset asset = new EmojiAsset();
+                asset.emoji = emoji;
+                asset.id = dir;
+                asset.previewImage = files[0];
+                asset.name = Path.GetFileName(dir);
+                assets.Add(asset);
             }
 
-            return asses;
+            return assets;
         }
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
