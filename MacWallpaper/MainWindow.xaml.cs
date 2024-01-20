@@ -13,7 +13,7 @@ namespace MacWallpaper
     /// </summary>
     public partial class MainWindow : Window
     {
-        Ass _lastSelectedItem;
+        EmojiAsset _lastSelectedItem;
 
         public MainWindow()
         {
@@ -22,15 +22,15 @@ namespace MacWallpaper
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Ass> asses = LoadData(@"C:\Users\admin\Documents\GitHub\fluentui-emoji\assets");
+            List<EmojiAsset> asses = LoadData(@"C:\Users\admin\Documents\GitHub\fluentui-emoji\assets");
 
-            List<Cate> cates = asses.GroupBy(x => x.emoji.group).Select(x => new Cate { title = x.Key, assets = x.ToList() }).ToList();
+            List<EmojiCategory> cates = asses.GroupBy(x => x.emoji.group).Select(x => new EmojiCategory { title = x.Key, assets = x.ToList() }).ToList();
             listBox.ItemsSource = cates;
         }
 
-        static List<Ass> LoadData(string dir)
+        static List<EmojiAsset> LoadData(string dir)
         {
-            List<Ass> asses = new List<Ass>();
+            List<EmojiAsset> asses = new List<EmojiAsset>();
             string[] dirs = Directory.GetDirectories(dir);
             foreach (var item in dirs)
             {
@@ -46,7 +46,7 @@ namespace MacWallpaper
                 string v3 = File.ReadAllText(v2);
                 Emoji2 emoji = JSONParser.FromJson<Emoji2>(v3);
 
-                Ass ass = new Ass();
+                EmojiAsset ass = new EmojiAsset();
                 ass.emoji = emoji;
                 ass.id = item;
                 ass.previewImage = files[0];
@@ -59,14 +59,14 @@ namespace MacWallpaper
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            gridView.ItemsSource = ((Cate)listBox.SelectedItem).assets;
+            gridView.ItemsSource = ((EmojiCategory)listBox.SelectedItem).assets;
             if (gridView.Items.Count > 0)
                 gridView.ScrollIntoView(gridView.Items[0]);
         }
 
         private void gridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Ass selectedItem = (Ass)gridView.SelectedItem;
+            EmojiAsset selectedItem = (EmojiAsset)gridView.SelectedItem;
             if (selectedItem != null)
             {
                 if (_lastSelectedItem != null)

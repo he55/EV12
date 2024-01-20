@@ -7,18 +7,27 @@ using System.Runtime.CompilerServices;
 
 namespace MacWallpaper
 {
-    public class Cate
+    public class EmojiCategory
     {
         public string title { get; set; }
-        public List<Ass> assets { get; set; }
+        public List<EmojiAsset> assets { get; set; }
     }
 
-    public class Ass : INotifyPropertyChanged
+    public class EmojiAsset : INotifyPropertyChanged
     {
-        private bool isSelected1;
+        private bool _isSelected;
+        private List<EmojiAsset2> _assets;
 
         public Emoji2 emoji { get; set; }
-        public List<EmojiAsset2> assets => AssetHelper.MakeAssets(id);
+        public List<EmojiAsset2> assets
+        {
+            get
+            {
+                if (_assets == null)
+                    _assets = EmojiAssetHelper.MakeAssets(id);
+                return _assets;
+            }
+        }
         public string id { get; set; }
         public string name { get; set; }
         public string previewImage { get; set; }
@@ -26,10 +35,10 @@ namespace MacWallpaper
         public string filepath { get; set; }
         public bool isSelected
         {
-            get => isSelected1;
+            get => _isSelected;
             set
             {
-                isSelected1 = value;
+                _isSelected = value;
                 OnPropertyChanged();
             }
         }

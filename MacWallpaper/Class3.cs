@@ -19,7 +19,7 @@ namespace MacWallpaper
         public List<AssetItem> items { get; set; }
     }
 
-    public class AssetHelper
+    public class EmojiAssetHelper
     {
         public static List<EmojiAsset2> MakeAssets(string path)
         {
