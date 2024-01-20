@@ -35,11 +35,11 @@ namespace MacWallpaper
             string[] dirs = Directory.GetDirectories(path);
             foreach (var dir in dirs)
             {
-                string imgdir = Path.Combine(dir, "3D");
-                if (!Directory.Exists(imgdir))
-                    imgdir = Path.Combine(dir, "Default", "3D");
+                string imageDir = Path.Combine(dir, "3D");
+                if (!Directory.Exists(imageDir))
+                    imageDir = Path.Combine(dir, @"Default\3D");
 
-                var files = Directory.GetFiles(imgdir, "*.png");
+                var files = Directory.GetFiles(imageDir, "*.png");
                 if (files.Length == 0)
                     continue;
 

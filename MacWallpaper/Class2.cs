@@ -69,8 +69,8 @@ namespace MacWallpaper
         public static List<AssetItem> MakeItems(string path)
         {
             List<AssetItem> assets = new List<AssetItem>();
-            string v1 = Path.Combine(path, "3D");
-            if (Directory.Exists(v1))
+            string imageDir = Path.Combine(path, "3D");
+            if (Directory.Exists(imageDir))
             {
                 assets.Add(new AssetItem
                 {
@@ -81,13 +81,13 @@ namespace MacWallpaper
             }
 
             string[] dirs = Directory.GetDirectories(path);
-            foreach (var item in dirs)
+            foreach (var dir in dirs)
             {
-                string v = Path.GetFileName(item);
+                string name = Path.GetFileName(dir);
                 assets.Add(new AssetItem
                 {
-                    name = v,
-                    subitems = MakeSubitems(item)
+                    name = name,
+                    subitems = MakeSubitems(dir)
                 });
             }
             return assets;
@@ -97,18 +97,18 @@ namespace MacWallpaper
         {
             List<AssetSubitem> items = new List<AssetSubitem>();
             string[] dirs = Directory.GetDirectories(path);
-            foreach (var item in dirs)
+            foreach (var dir in dirs)
             {
-                var files = Directory.GetFiles(item);
-                string v1 = files.FirstOrDefault(x => x.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || x.EndsWith(".svg", StringComparison.OrdinalIgnoreCase));
-                if (v1 == null)
+                var files = Directory.GetFiles(dir);
+                string image = files.FirstOrDefault(x => x.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || x.EndsWith(".svg", StringComparison.OrdinalIgnoreCase));
+                if (image == null)
                     continue;
 
-                string v = Path.GetFileName(item);
+                string name = Path.GetFileName(dir);
                 items.Add(new AssetSubitem
                 {
-                    name = v,
-                    source = v1,
+                    name = name,
+                    source = image,
                 });
             }
             return items;
