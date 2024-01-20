@@ -13,7 +13,7 @@ namespace MacWallpaper
         public string source { get; set; }
     }
 
-    public class EmojiAsset
+    public class EmojiAsset2
     {
         public string name { get; set; }
         public List<AssetItem> items { get; set; }
@@ -21,13 +21,13 @@ namespace MacWallpaper
 
     public class AssetHelper
     {
-        public static List<EmojiAsset> MakeAssets(string path)
+        public static List<EmojiAsset2> MakeAssets(string path)
         {
-            List<EmojiAsset> assets = new List<EmojiAsset>();
+            List<EmojiAsset2> assets = new List<EmojiAsset2>();
             string v1 = Path.Combine(path, "3D");
             if (Directory.Exists(v1))
             {
-                assets.Add(new EmojiAsset
+                assets.Add(new EmojiAsset2
                 {
                     name = "Default",
                     items = MakeItems(path)
@@ -39,7 +39,7 @@ namespace MacWallpaper
             foreach (var item in dirs)
             {
                 string v = Path.GetFileName(item);
-                assets.Add(new EmojiAsset
+                assets.Add(new EmojiAsset2
                 {
                     name = v,
                     items = MakeItems(item)

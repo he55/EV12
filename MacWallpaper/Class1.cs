@@ -1,6 +1,6 @@
 ﻿namespace MacWallpaper
 {
-    public class Emoji
+    public class Emoji2
     {
         public string cldr { get; set; }
         public string fromVersion { get; set; }

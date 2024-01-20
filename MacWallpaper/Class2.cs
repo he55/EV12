@@ -17,8 +17,8 @@ namespace MacWallpaper
     {
         private bool isSelected1;
 
-        public Emoji emoji { get; set; }
-        public List<EmojiAsset> assets => AssetHelper.MakeAssets(id);
+        public Emoji2 emoji { get; set; }
+        public List<EmojiAsset2> assets => AssetHelper.MakeAssets(id);
         public string id { get; set; }
         public string name { get; set; }
         public string previewImage { get; set; }

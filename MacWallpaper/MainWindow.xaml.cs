@@ -44,7 +44,7 @@ namespace MacWallpaper
 
                 string v2 = Path.Combine(item, "metadata.json");
                 string v3 = File.ReadAllText(v2);
-                Emoji emoji = JSONParser.FromJson<Emoji>(v3);
+                Emoji2 emoji = JSONParser.FromJson<Emoji2>(v3);
 
                 Ass ass = new Ass();
                 ass.emoji = emoji;
@@ -82,7 +82,7 @@ namespace MacWallpaper
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            EmojiAsset selectedItem = (EmojiAsset)listBox2.SelectedItem;
+            EmojiAsset2 selectedItem = (EmojiAsset2)listBox2.SelectedItem;
             if (selectedItem != null)
             {
                 Process.Start("explorer.exe", $"/select, \"{selectedItem.items[0].source}\"");
