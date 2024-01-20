@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using TinyJson;
@@ -31,7 +28,7 @@ namespace MacWallpaper
             listBox.ItemsSource = cates;
         }
 
-         static List<Ass> LoadData(string dir)
+        static List<Ass> LoadData(string dir)
         {
             List<Ass> asses = new List<Ass>();
             string[] dirs = Directory.GetDirectories(dir);
@@ -79,7 +76,7 @@ namespace MacWallpaper
                 _lastSelectedItem.isSelected = true;
                 myHeaderControl.DataContext = _lastSelectedItem;
                 listBox2.SelectedIndex = 0;
-                listBox2.Visibility=_lastSelectedItem.assets.Count>1 ? Visibility.Visible : Visibility.Collapsed;
+                listBox2.Visibility = _lastSelectedItem.assets.Count > 1 ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
