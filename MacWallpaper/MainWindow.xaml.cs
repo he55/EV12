@@ -45,7 +45,7 @@ namespace MacWallpaper
 
                 string filePath = Path.Combine(dir, "metadata.json");
                 string json = File.ReadAllText(filePath);
-                Emoji2 emoji = JSONParser.FromJson<Emoji2>(json);
+                EmojiObject emoji = JSONParser.FromJson<EmojiObject>(json);
 
                 EmojiAsset asset = new EmojiAsset();
                 asset.emoji = emoji;

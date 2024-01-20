@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace MacWallpaper
 {
-    public class Emoji2
+    public class EmojiObject
     {
         public string cldr { get; set; }
         public string fromVersion { get; set; }
@@ -19,18 +19,12 @@ namespace MacWallpaper
         public string unicode { get; set; }
     }
 
-    public class EmojiCategory
-    {
-        public string title { get; set; }
-        public List<EmojiAsset> assets { get; set; }
-    }
-
     public class EmojiAsset : INotifyPropertyChanged
     {
         private bool _isSelected;
         private List<AssetItem> _items;
 
-        public Emoji2 emoji { get; set; }
+        public EmojiObject emoji { get; set; }
         public List<AssetItem> items
         {
             get
@@ -43,8 +37,7 @@ namespace MacWallpaper
         public string id { get; set; }
         public string name { get; set; }
         public string previewImage { get; set; }
-
-        public string filepath { get; set; }
+        public string filePath { get; set; }
         public bool isSelected
         {
             get => _isSelected;
@@ -62,6 +55,12 @@ namespace MacWallpaper
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+    }
+
+    public class EmojiCategory
+    {
+        public string title { get; set; }
+        public List<EmojiAsset> assets { get; set; }
     }
 
     public class AssetSubitem
