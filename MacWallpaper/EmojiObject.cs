@@ -79,29 +79,29 @@ namespace MacWallpaper
     {
         public static List<AssetItem> MakeItems(string path)
         {
-            List<AssetItem> assets = new List<AssetItem>();
+            List<AssetItem> items = new List<AssetItem>();
             string imageDir = Path.Combine(path, "3D");
             if (Directory.Exists(imageDir))
             {
-                assets.Add(new AssetItem
+                items.Add(new AssetItem
                 {
                     name = "Default",
                     subitems = MakeSubitems(path)
                 });
-                return assets;
+                return items;
             }
 
             string[] dirs = Directory.GetDirectories(path);
             foreach (var dir in dirs)
             {
                 string name = Path.GetFileName(dir);
-                assets.Add(new AssetItem
+                items.Add(new AssetItem
                 {
                     name = name,
                     subitems = MakeSubitems(dir)
                 });
             }
-            return assets;
+            return items;
         }
 
         static List<AssetSubitem> MakeSubitems(string path)
