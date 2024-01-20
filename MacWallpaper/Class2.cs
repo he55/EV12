@@ -52,7 +52,7 @@ namespace MacWallpaper
         }
     }
 
-    public class AssetItem
+    public class AssetItem2
     {
         public string name { get; set; }
         public string source { get; set; }
@@ -61,7 +61,7 @@ namespace MacWallpaper
     public class EmojiAsset2
     {
         public string name { get; set; }
-        public List<AssetItem> items { get; set; }
+        public List<AssetItem2> items { get; set; }
     }
 
     public class EmojiAssetHelper
@@ -93,9 +93,9 @@ namespace MacWallpaper
             return assets;
         }
 
-        static List<AssetItem> MakeItems(string path)
+        static List<AssetItem2> MakeItems(string path)
         {
-            List<AssetItem> items = new List<AssetItem>();
+            List<AssetItem2> items = new List<AssetItem2>();
             string[] dirs = Directory.GetDirectories(path);
             foreach (var item in dirs)
             {
@@ -105,7 +105,7 @@ namespace MacWallpaper
                     continue;
 
                 string v = Path.GetFileName(item);
-                items.Add(new AssetItem
+                items.Add(new AssetItem2
                 {
                     name = v,
                     source = v1,
